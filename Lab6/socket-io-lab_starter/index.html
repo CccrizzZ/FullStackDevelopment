@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.io</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    
+    <script>
+      // client script for html file
+
+      // run when ever the document obj is loaded
+      $( document ).ready(function() {
+          console.log( "ready!" )
+      })
+        
+
+      // make connection to the server
+      let socket = io.connect('http://localhost:8080')
+
+
+      // receive event from client
+      // socket.on('confirmed', (data) => {
+      //     console.log(data)
+      // })
+
+
+      // button event
+      const connect = () => {
+        // socket.emit('connect', {data : "client connecting"})
+      }
+      const disconnect = () => { 
+
+      }
+      const send = () => { 
+
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Socket.io Lab</h1>
+    <button id="connect" onClick='connect()'/>Connect</button>
+    <button id="disconnect" onClick='disconnect()'>Disconnect</button>
+    <button id="send" onClick='send()'/>Send Message</button>
+  </body>
+</html>

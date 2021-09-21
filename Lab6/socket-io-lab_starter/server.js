@@ -1,11 +1,11 @@
+
 let http = require('http')
   , url = require('url')
   , fs = require('fs')
   , io = require('socket.io')
   , server
 
-// let Emitter = require("events").EventEmitter
-// let ee = new Emitter
+
 
 console.log("Server Running")
 
@@ -15,19 +15,19 @@ server = http.createServer(function(req, res){
   var path = url.parse(req.url).pathname;
   switch (path){
     case '/':
-      // grab the index.html file and serve it
+      // grab the index.html file and serve it as root
       fs.readFile(__dirname + '/index.html', function(err, data){
-        if (err) return send404(res);
+        if (err) return send404(res)
         res.writeHead(200, {'Content-Type': path == 'json.js' ? 'text/javascript' : 'text/html'})
-        res.write(data, 'utf8');
-        res.end();
+        res.write(data, 'utf8')
+        res.end()
         
 
 
-      });
-      break;
+      })
+      break
 
-    default: send404(res);
+    default: send404(res)
   }
 })
 
@@ -45,26 +45,32 @@ server.listen(8080)
 
 
 // socket.io setup
-var ioSocket = io.listen(server)
+let ioSocket = io.listen(server)
 
 // send msg to client
 
 
-// setup socket listeners here
-let newConnection = () => {
+// on client connection
+ioSocket.on('connect', socket => {
+  console.log(`Client connected: ${socket.id}`)
   
-}
+  // client custom event for messages
+  socket.on('sendmsg', (msg) => {
+    console.log(msg)
+  })
 
-// io.socket.on("connect", () => {
+  socket.on('dip', (msg) => {
+    console.log(`Client disconnected: ${socket.id}`)
+    socket.disconnect()
+  })
 
-// })
+
+})
 
 
-let disconnected = () => {
-  
-}
 
-let sendMsg = () => {
 
-}
-
+// on client disconnection
+ioSocket.on('disconnect', (data) => {
+  console.log('client disconnected: ' + data.id)
+})
